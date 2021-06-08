@@ -45,7 +45,11 @@ const validateDate = function (day, month, year) {
 };
 
 const checkGapYear = function (year) {
-    return year % 4 == 0 ? true : false;
+    if(year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)){
+        return true;
+    }
+    return false;
+    
 };
 console.log("check gap year");
 console.log(checkGapYear(parseInt(2015)));
@@ -232,6 +236,7 @@ btnReadNum.onclick = function () {
  */
 
 var btnFind = getEle("btnFind");
+var txtCompareResult = getEle("txtCompareResult");
 btnFind.onclick = function(){
     var nameFirst = getEle("txtNameFirst").value;
     var coordinatesX1 = parseFloat(getEle("x1").value);
@@ -245,6 +250,10 @@ btnFind.onclick = function(){
     var distanceFirst = Math.pow(coordinatesX1,2) + Math.pow(coordinatesY1,2);
     var distanceSecond = Math.pow(coordinatesX2,2) + Math.pow(coordinatesY2,2);
     var distanceThird = Math.pow(coordinatesX3,2) + Math.pow(coordinatesY3,2);
+    if(nameFirst.length == 0 || nameSecond.length == 0 || nameThird.length == 0){
+        txtCompareResult.innerHTML = "Tên không hợp lệ";
+        return; 
+    }
     var maxDistance = distanceFirst;
     var maxName = nameFirst;
     if(maxDistance < distanceSecond){
@@ -255,6 +264,6 @@ btnFind.onclick = function(){
         maxDistance = distanceThird;
         maxName = nameThird;
     }
-    var txtCompareResult = getEle("txtCompareResult");
+    
     txtCompareResult.innerHTML = "Học sinh xa trường nhất là: " + maxName;
 } 
